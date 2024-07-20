@@ -39,6 +39,13 @@ def call_urls():
             response = requests.get(url)
             print(f"{datetime.now()} - URL: {url} - Status Code: {response.status_code}")
             print(response.text)
+            isLast = False
+            try:
+                res = response.json()
+                if(res['load_again']):
+                    isLast= True
+            except Exception as e:
+                print(f"Error {e}")
             update_last_call(url)
         except requests.exceptions.RequestException as e:
             print(f"{datetime.now()} - URL: {url} - Error: {e}")
